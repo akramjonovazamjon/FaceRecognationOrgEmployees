@@ -1,4 +1,3 @@
-
 server:
   port: ${SERVER_PORT:8008}
   shutdown: graceful
@@ -9,3 +8,5 @@ spring:
 
   main:
     allow-bean-definition-overriding: true
+
+debug: true
