@@ -37,23 +37,6 @@ public class UserService {
         return repository.save(user);
     }
 
-//    private static final String BASE_IMAGE_PATH = "src/main/resources/";
-//
-//    private String saveUserPicture(MultipartFile picture) throws IOException {
-//        if (Objects.isNull(picture) || picture.isEmpty()) {
-//            throw new PictureNotFoundException();
-//        }
-//        String imageUrl = String.format("images/%s.jpg", UUID.randomUUID());
-//        File file = new File(BASE_IMAGE_PATH + imageUrl);
-//        file.getParentFile().mkdirs();
-//        file.createNewFile();
-//        try (FileOutputStream outputStream = new FileOutputStream(file)) {
-//            byte[] mainContent = picture.getBytes();
-//            outputStream.write(mainContent);
-//        }
-//        return imageUrl;
-//    }
-
     @Value("${jwt.secret}")
     private String tokenSecret;
 
