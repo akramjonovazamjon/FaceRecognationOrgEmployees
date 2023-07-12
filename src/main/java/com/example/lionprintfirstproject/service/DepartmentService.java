@@ -1,15 +1,20 @@
 package com.example.lionprintfirstproject.service;
 
 import com.example.lionprintfirstproject.dto.department.CreateDepartment;
+import com.example.lionprintfirstproject.dto.department.DepartmentFilter;
 import com.example.lionprintfirstproject.dto.department.UpdateDepartment;
 import com.example.lionprintfirstproject.entity.Department;
 import com.example.lionprintfirstproject.exception.department.DepartmentExistByNameException;
 import com.example.lionprintfirstproject.exception.department.DepartmentNotFoundByIdException;
 import com.example.lionprintfirstproject.mapper.DepartmentMapper;
 import com.example.lionprintfirstproject.repository.DepartmentRepository;
+import com.example.lionprintfirstproject.util.QueryUtils;
+import jakarta.persistence.criteria.Path;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -50,8 +55,18 @@ public class DepartmentService {
         return repository.findById(id).orElseThrow(() -> new DepartmentNotFoundByIdException(id));
     }
 
-    public List<Department> getAll(Pageable pageable) {
-        return repository.findAll(pageable).getContent();
+    public List<Department> getAll(DepartmentFilter filter, Pageable pageable) {
+        Specification<Department> specification = buildDepartmentSpecification(filter);
+        return repository.findAll(specification, pageable).getContent();
+    }
+
+    private Specification<Department> buildDepartmentSpecification(DepartmentFilter filter) {
+        Specification<Department> spec = Specification.where(null);
+
+        if (StringUtils.hasText(filter.name()))
+            spec = spec.and(QueryUtils.like(root -> root.get("name"), filter.name()));
+
+        return spec;
     }
 
 

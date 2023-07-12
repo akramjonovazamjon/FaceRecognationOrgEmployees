@@ -3,6 +3,7 @@ package com.example.lionprintfirstproject.controller;
 import com.example.lionprintfirstproject.controller.vm.DepartmentVm;
 import com.example.lionprintfirstproject.dto.ResponseData;
 import com.example.lionprintfirstproject.dto.department.CreateDepartment;
+import com.example.lionprintfirstproject.dto.department.DepartmentFilter;
 import com.example.lionprintfirstproject.dto.department.UpdateDepartment;
 import com.example.lionprintfirstproject.entity.Department;
 import com.example.lionprintfirstproject.mapper.DepartmentMapper;
@@ -35,8 +36,8 @@ public class DepartmentController {
     }
 
     @GetMapping
-    public ResponseData<List<DepartmentVm>> getAll(Pageable pageable) {
-        List<Department> departments = service.getAll(pageable);
+    public ResponseData<List<DepartmentVm>> getAll(DepartmentFilter filter, Pageable pageable) {
+        List<Department> departments = service.getAll(filter, pageable);
         return ResponseData.of(mapper.asDepartmentList(departments));
     }
 
