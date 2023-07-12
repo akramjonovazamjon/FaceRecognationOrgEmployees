@@ -2,6 +2,10 @@ package com.example.lionprintfirstproject.config;
 
 import com.example.lionprintfirstproject.dto.ResponseData;
 import com.example.lionprintfirstproject.exception.*;
+import com.example.lionprintfirstproject.exception.user.UserExistByUsernameException;
+import com.example.lionprintfirstproject.exception.user.UserNotFoundByIdException;
+import com.example.lionprintfirstproject.exception.user.UserNotFoundByUsernameException;
+import com.example.lionprintfirstproject.exception.user.UserPasswordNoMatchesException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -17,8 +21,8 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)
-    @ExceptionHandler(UserExistByPhoneNumberException.class)
-    public ResponseData<Object> handleUserExistByPhoneNumberException(UserExistByPhoneNumberException e) {
+    @ExceptionHandler(UserExistByUsernameException.class)
+    public ResponseData<Object> handleUserExistByPhoneNumberException(UserExistByUsernameException e) {
         return ResponseData.errorOf(e.getMessage());
     }
 
@@ -29,8 +33,8 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)
-    @ExceptionHandler(UserNotFoundByPhoneNumberException.class)
-    public ResponseData<Object> handleUserNotFoundByPhoneNumberException(UserNotFoundByPhoneNumberException e) {
+    @ExceptionHandler(UserNotFoundByUsernameException.class)
+    public ResponseData<Object> handleUserNotFoundByPhoneNumberException(UserNotFoundByUsernameException e) {
         return ResponseData.errorOf(e.getMessage());
     }
 

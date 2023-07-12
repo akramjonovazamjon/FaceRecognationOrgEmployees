@@ -1,4 +1,4 @@
-package com.example.lionprintfirstproject.exception;
+package com.example.lionprintfirstproject.exception.user;
 
 public class UserPasswordNoMatchesException extends RuntimeException {
     public UserPasswordNoMatchesException() {

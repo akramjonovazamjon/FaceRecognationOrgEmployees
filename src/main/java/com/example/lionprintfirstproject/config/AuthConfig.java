@@ -1,7 +1,7 @@
 package com.example.lionprintfirstproject.config;
 
 import com.example.lionprintfirstproject.entity.User;
-import com.example.lionprintfirstproject.exception.UserNotFoundByPhoneNumberException;
+import com.example.lionprintfirstproject.exception.user.UserNotFoundByUsernameException;
 import com.example.lionprintfirstproject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -18,8 +18,8 @@ public class AuthConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> repository.findByPhoneNumber(username).map(User::asDetailedUser)
-                .orElseThrow(() -> new UserNotFoundByPhoneNumberException(username));
+        return username -> repository.findByUsername(username).map(User::asDetailedUser)
+                .orElseThrow(() -> new UserNotFoundByUsernameException(username));
     }
 
     @Bean

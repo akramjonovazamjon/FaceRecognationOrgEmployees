@@ -1,4 +1,4 @@
-package com.example.lionprintfirstproject.exception;
+package com.example.lionprintfirstproject.exception.user;
 
 import lombok.Getter;
 

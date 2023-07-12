@@ -1,19 +1,18 @@
 package com.example.lionprintfirstproject.controller;
 
 import com.example.lionprintfirstproject.controller.vm.UserVm;
-import com.example.lionprintfirstproject.dto.CreateUser;
-import com.example.lionprintfirstproject.dto.LoginDto;
+import com.example.lionprintfirstproject.dto.user.CreateUser;
+import com.example.lionprintfirstproject.dto.user.LoginDto;
 import com.example.lionprintfirstproject.dto.ResponseData;
-import com.example.lionprintfirstproject.dto.TokenResult;
+import com.example.lionprintfirstproject.dto.user.TokenResult;
+import com.example.lionprintfirstproject.dto.user.UpdateUser;
 import com.example.lionprintfirstproject.entity.User;
 import com.example.lionprintfirstproject.mapper.UserMapper;
 import com.example.lionprintfirstproject.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -25,16 +24,8 @@ public class UserController {
     private final UserMapper mapper;
 
     @PostMapping
-    public ResponseData<UserVm> create(
-            @RequestParam(value = "picture") MultipartFile photo,
-            @RequestParam(value = "firstName") String firstName,
-            @RequestParam(value = "lastName") String lastName,
-            @RequestParam(value = "middleName") String middleName,
-            @RequestParam(value = "phoneNumber") String phoneNumber,
-            @RequestParam(value = "password") String password,
-            @RequestParam(value = "role") String role
-    ) {
-        User user = service.create(new CreateUser(firstName, lastName, middleName, phoneNumber, password, role), photo);
+    public ResponseData<UserVm> create(@RequestBody @Valid CreateUser dto) {
+        User user = service.create(dto);
         return ResponseData.of(mapper.asUserVm(user));
     }
 
@@ -44,10 +35,14 @@ public class UserController {
         return ResponseData.of(tokenResult);
     }
 
-    @GetMapping
-    public ResponseData<List<UserVm>> getAll(Pageable pageable) {
-        List<User> users = service.getAll(pageable);
-        return ResponseData.of(mapper.asUserList(users));
+    @PutMapping("/{id}")
+    public void update(@RequestBody UpdateUser dto, @PathVariable Long id) {
+        service.update(id, dto);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        service.delete(id);
     }
 
 }
