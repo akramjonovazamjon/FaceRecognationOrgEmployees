@@ -9,7 +9,6 @@ import com.example.lionprintfirstproject.exception.department.DepartmentNotFound
 import com.example.lionprintfirstproject.mapper.DepartmentMapper;
 import com.example.lionprintfirstproject.repository.DepartmentRepository;
 import com.example.lionprintfirstproject.util.QueryUtils;
-import jakarta.persistence.criteria.Path;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
