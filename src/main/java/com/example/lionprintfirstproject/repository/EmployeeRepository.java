@@ -9,4 +9,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     boolean existsByPhoneNumber(String phoneNumber);
 
+    boolean existsByPhoneNumberAndIdNot(String phoneNumber, Long id);
+
 }
