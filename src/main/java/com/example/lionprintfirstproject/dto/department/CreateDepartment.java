@@ -1,4 +1,6 @@
 package com.example.lionprintfirstproject.dto.department;
 
-public record CreateDepartment(String name, String info) {
+import jakarta.validation.constraints.NotBlank;
+
+public record CreateDepartment(@NotBlank(message = "error.invalid.name.not_blank") String name, String info) {
 }

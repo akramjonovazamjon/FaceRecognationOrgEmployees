@@ -5,7 +5,7 @@ import com.example.lionprintfirstproject.dto.employee.UpdateEmployee;
 import com.example.lionprintfirstproject.entity.Department;
 import com.example.lionprintfirstproject.entity.Employee;
 import com.example.lionprintfirstproject.entity.Job;
-import com.example.lionprintfirstproject.exception.PictureNotFoundException;
+import com.example.lionprintfirstproject.exception.employee.PictureNotFoundException;
 import com.example.lionprintfirstproject.exception.employee.EmployeeExistException;
 import com.example.lionprintfirstproject.exception.employee.EmployeeNotFoundByIdException;
 import com.example.lionprintfirstproject.mapper.EmployeeMapper;

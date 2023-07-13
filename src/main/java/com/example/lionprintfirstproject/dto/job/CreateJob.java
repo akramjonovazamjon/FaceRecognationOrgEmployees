@@ -1,4 +1,6 @@
 package com.example.lionprintfirstproject.dto.job;
 
-public record CreateJob(String name, String info) {
+import jakarta.validation.constraints.NotBlank;
+
+public record CreateJob(@NotBlank(message = "error.invalid.name.not_blank") String name, String info) {
 }
