@@ -95,4 +95,8 @@ public class EmployeeService {
     public void delete(Long id) {
         repository.deleteById(id);
     }
+
+    public Long getEmployeesCount() {
+        return repository.count();
+    }
 }

@@ -71,4 +71,10 @@ public class EmployeeController {
         service.delete(id);
     }
 
+    @GetMapping("/count")
+    public ResponseData<Long> countAll() {
+        Long count = service.getEmployeesCount();
+        return ResponseData.of(count);
+    }
+
 }
