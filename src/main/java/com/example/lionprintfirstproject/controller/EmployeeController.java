@@ -77,4 +77,16 @@ public class EmployeeController {
         return ResponseData.of(count);
     }
 
+    @GetMapping("/departments/{id}")
+    public ResponseData<List<EmployeeVm>> getAllByDepartmentId(@PathVariable Long id, Pageable pageable) {
+        List<Employee> employeeList = service.getAllByDepartmentId(id, pageable);
+        return ResponseData.of(mapper.asEmployeeList(employeeList));
+    }
+
+    @GetMapping("/jobs/{id}")
+    ResponseData<List<EmployeeVm>> getAllByJobId(@PathVariable Long id, Pageable pageable) {
+        List<Employee> employeeList = service.getAllByJobId(id, pageable);
+        return ResponseData.of(mapper.asEmployeeList(employeeList));
+    }
+
 }

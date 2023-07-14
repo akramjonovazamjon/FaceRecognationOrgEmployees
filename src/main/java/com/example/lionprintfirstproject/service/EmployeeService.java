@@ -99,4 +99,12 @@ public class EmployeeService {
     public Long getEmployeesCount() {
         return repository.count();
     }
+
+    public List<Employee> getAllByDepartmentId(Long departmentId, Pageable pageable) {
+        return repository.findAllByDepartmentId(departmentId, pageable).getContent();
+    }
+
+    public List<Employee> getAllByJobId(Long jobId, Pageable pageable) {
+        return repository.findAllByJobId(jobId, pageable).getContent();
+    }
 }
