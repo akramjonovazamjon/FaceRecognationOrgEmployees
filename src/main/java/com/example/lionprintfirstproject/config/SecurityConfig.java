@@ -26,7 +26,7 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/**", "/cameras")
+                .requestMatchers("/auth/**", "/cameras", "/images/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -48,6 +48,17 @@ public class SecurityConfig {
                         .allowedOrigins("*")
                         .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                         .allowedHeaders("*");
+            }
+        };
+    }
+
+    @Bean
+    public WebMvcConfigurer webMvcConfigurer1() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addResourceHandlers(ResourceHandlerRegistry registry) {
+                registry.addResourceHandler("/images/**")
+                        .addResourceLocations("classpath:/images/");
             }
         };
     }
