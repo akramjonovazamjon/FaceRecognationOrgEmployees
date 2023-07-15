@@ -1,5 +1,6 @@
 package com.example.lionprintfirstproject.controller;
 
+import com.example.lionprintfirstproject.controller.vm.EmployeeResponse;
 import com.example.lionprintfirstproject.controller.vm.EmployeeVm;
 import com.example.lionprintfirstproject.dto.ResponseData;
 import com.example.lionprintfirstproject.dto.employee.CreateEmployee;
@@ -25,7 +26,7 @@ public class EmployeeController {
 
 
     @PostMapping
-    public ResponseData<EmployeeVm> create(
+    public ResponseData<EmployeeResponse> create(
             @RequestParam(name = "firstName") String firstName,
             @RequestParam(name = "lastName") String lastName,
             @RequestParam(name = "middleName") String middleName,
@@ -36,7 +37,7 @@ public class EmployeeController {
             @RequestParam(name = "jobId") Long jobId
     ) throws IOException {
         Employee employee = service.create(new CreateEmployee(firstName, lastName, middleName, phoneNumber, address), file, departmentId, jobId);
-        return ResponseData.of(mapper.asEmployeeVm(employee));
+        return ResponseData.of(mapper.asEmployee(employee));
     }
 
     @PutMapping("/{id}")
@@ -56,14 +57,14 @@ public class EmployeeController {
 
     @GetMapping
     public ResponseData<List<EmployeeVm>> getAll(Pageable pageable) {
-        List<Employee> employeeList = service.getAll(pageable);
-        return ResponseData.of(mapper.asEmployeeList(employeeList));
+        List<EmployeeVm> employeeList = service.getAllEmployees(pageable);
+        return ResponseData.of(employeeList);
     }
 
     @GetMapping("/{id}")
     public ResponseData<EmployeeVm> getById(@PathVariable Long id) {
-        Employee employee = service.getById(id);
-        return ResponseData.of(mapper.asEmployeeVm(employee));
+        EmployeeVm employee = service.getEmployeeById(id);
+        return ResponseData.of(employee);
     }
 
     @DeleteMapping("/{id}")
@@ -79,14 +80,14 @@ public class EmployeeController {
 
     @GetMapping("/departments/{id}")
     public ResponseData<List<EmployeeVm>> getAllByDepartmentId(@PathVariable Long id, Pageable pageable) {
-        List<Employee> employeeList = service.getAllByDepartmentId(id, pageable);
-        return ResponseData.of(mapper.asEmployeeList(employeeList));
+        List<EmployeeVm> employeeList = service.getAllEmployeesByDepartmentId(id, pageable);
+        return ResponseData.of(employeeList);
     }
 
     @GetMapping("/jobs/{id}")
     ResponseData<List<EmployeeVm>> getAllByJobId(@PathVariable Long id, Pageable pageable) {
-        List<Employee> employeeList = service.getAllByJobId(id, pageable);
-        return ResponseData.of(mapper.asEmployeeList(employeeList));
+        List<EmployeeVm> employeeList = service.getAllEmployeesByJobId(id, pageable);
+        return ResponseData.of(employeeList);
     }
 
 }

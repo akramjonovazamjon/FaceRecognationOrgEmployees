@@ -1,6 +1,6 @@
 package com.example.lionprintfirstproject.controller.vm;
 
-public record EmployeeVm(
+public record EmployeeResponse(
         Long id,
         String firstName,
         String lastName,
@@ -9,7 +9,6 @@ public record EmployeeVm(
         String address,
         String imageUrl,
         DepartmentVm department,
-        JobVm job,
-        EmployeeWorkingDayVm workingDay
+        JobVm job
 ) {
 }

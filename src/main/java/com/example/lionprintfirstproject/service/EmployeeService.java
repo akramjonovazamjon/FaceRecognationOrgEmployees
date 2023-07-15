@@ -1,15 +1,18 @@
 package com.example.lionprintfirstproject.service;
 
+import com.example.lionprintfirstproject.controller.vm.EmployeeVm;
 import com.example.lionprintfirstproject.dto.employee.CreateEmployee;
 import com.example.lionprintfirstproject.dto.employee.UpdateEmployee;
 import com.example.lionprintfirstproject.entity.Department;
 import com.example.lionprintfirstproject.entity.Employee;
+import com.example.lionprintfirstproject.entity.EmployeeWorkingDay;
 import com.example.lionprintfirstproject.entity.Job;
 import com.example.lionprintfirstproject.exception.employee.PictureNotFoundException;
 import com.example.lionprintfirstproject.exception.employee.EmployeeExistException;
 import com.example.lionprintfirstproject.exception.employee.EmployeeNotFoundByIdException;
 import com.example.lionprintfirstproject.mapper.EmployeeMapper;
 import com.example.lionprintfirstproject.repository.EmployeeRepository;
+import com.example.lionprintfirstproject.repository.EmployeeWorkingDayRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -30,6 +34,7 @@ public class EmployeeService {
     private final EmployeeMapper mapper;
     private final DepartmentService departmentService;
     private final JobService jobService;
+    private final EmployeeWorkingDayRepository employeeWorkingDayRepository;
 
     public Employee create(CreateEmployee dto, MultipartFile file, Long departmentId, Long jobId) throws IOException {
 
@@ -107,4 +112,29 @@ public class EmployeeService {
     public List<Employee> getAllByJobId(Long jobId, Pageable pageable) {
         return repository.findAllByJobId(jobId, pageable).getContent();
     }
+
+    public List<EmployeeVm> getAllEmployees(Pageable pageable) {
+        List<Employee> employees = getAll(pageable);
+        return employees.stream().map(this::convertEmployeeToEmployeeVm).toList();
+    }
+
+    public List<EmployeeVm> getAllEmployeesByJobId(Long jobId, Pageable pageable) {
+        List<Employee> employeeList = getAllByJobId(jobId, pageable);
+        return employeeList.stream().map(this::convertEmployeeToEmployeeVm).toList();
+    }
+
+    public List<EmployeeVm> getAllEmployeesByDepartmentId(Long departmentId, Pageable pageable) {
+        List<Employee> employeeList = getAllByDepartmentId(departmentId, pageable);
+        return employeeList.stream().map(this::convertEmployeeToEmployeeVm).toList();
+    }
+
+    public EmployeeVm getEmployeeById(Long id) {
+        return convertEmployeeToEmployeeVm(getById(id));
+    }
+
+    private EmployeeVm convertEmployeeToEmployeeVm(Employee employee) {
+        EmployeeWorkingDay employeeWorkingDay = employeeWorkingDayRepository.findByWorkingDateAndEmployeeId(LocalDate.now(), employee.getId()).orElse(null);
+        return mapper.asEmployeeVm(employee, employeeWorkingDay);
+    }
+
 }
