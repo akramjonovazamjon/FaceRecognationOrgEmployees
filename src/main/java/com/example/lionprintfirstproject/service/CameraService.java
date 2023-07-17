@@ -23,7 +23,14 @@ public class CameraService {
     private final Gson gson;
     private final EmployeeService employeeService;
 
-    public void detectFace(HttpServletRequest request) {
+    public String getEmployeeId(String json) {
+
+        CameraResult cameraResult = gson.fromJson(json, CameraResult.class);
+
+        return cameraResult.getAccessControllerEvent().getEmployeeNoString();
+    }
+
+    public void detectFaceArrival(HttpServletRequest request) {
 
         StandardMultipartHttpServletRequest multipartHttpServletRequest = (StandardMultipartHttpServletRequest) request;
         Enumeration<String> parameterNames = multipartHttpServletRequest.getParameterNames();
@@ -35,35 +42,58 @@ public class CameraService {
         String next = stringIterator.next();
         String json = multipartHttpServletRequest.getParameter(next);
 
-        CameraResult cameraResult = gson.fromJson(json, CameraResult.class);
-
-        String employeeId = cameraResult.getAccessControllerEvent().getEmployeeNoString();
+        String employeeId = getEmployeeId(json);
 
         if (employeeId != null) {
-            saveEmployeeActions(Long.valueOf(employeeId));
+            saveEmployeeActionsForArrival(Long.valueOf(employeeId));
         }
     }
 
-    private void saveEmployeeActions(Long employeeId) {
+    public void detectFaceExit(HttpServletRequest request) {
+
+        StandardMultipartHttpServletRequest multipartHttpServletRequest = (StandardMultipartHttpServletRequest) request;
+        Enumeration<String> parameterNames = multipartHttpServletRequest.getParameterNames();
+        Iterator<String> stringIterator = parameterNames.asIterator();
+
+        if (!stringIterator.hasNext())
+            return;
+
+        String next = stringIterator.next();
+        String json = multipartHttpServletRequest.getParameter(next);
+
+        String employeeId = getEmployeeId(json);
+
+        if (employeeId != null) {
+            saveEmployeeActionsForExit(Long.valueOf(employeeId));
+        }
+    }
+
+    private void saveEmployeeActionsForArrival(Long employeeId) {
 
         Optional<EmployeeWorkingDay> optionalEmployeeWorkingDay = repository.findByWorkingDateAndEmployeeId(LocalDate.now(), employeeId);
 
-        if (optionalEmployeeWorkingDay.isPresent()) {
-            update(optionalEmployeeWorkingDay.get());
-        } else {
+        if (optionalEmployeeWorkingDay.isEmpty()) {
             save(employeeId);
+        } else {
+            EmployeeWorkingDay employeeWorkingDay = optionalEmployeeWorkingDay.get();
+            employeeWorkingDay.setInWork(true);
+            employeeWorkingDay.setExitTime(null);
+            repository.save(employeeWorkingDay);
         }
+    }
+
+    private void saveEmployeeActionsForExit(Long employeeId) {
+
+        Optional<EmployeeWorkingDay> optionalEmployeeWorkingDay = repository.findByWorkingDateAndEmployeeId(LocalDate.now(), employeeId);
+
+        optionalEmployeeWorkingDay.ifPresent(this::update);
     }
 
     private void update(EmployeeWorkingDay employeeWorkingDay) {
 
-        if (employeeWorkingDay.isInWork()) {
-            employeeWorkingDay.setExitTime(LocalTime.now());
-            employeeWorkingDay.setInWork(false);
-        } else {
-            employeeWorkingDay.setExitTime(null);
-            employeeWorkingDay.setInWork(true);
-        }
+        employeeWorkingDay.setExitTime(LocalTime.now());
+        employeeWorkingDay.setInWork(false);
+
         repository.save(employeeWorkingDay);
     }
 
