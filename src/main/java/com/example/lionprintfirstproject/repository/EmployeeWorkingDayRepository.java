@@ -12,4 +12,6 @@ public interface EmployeeWorkingDayRepository extends JpaRepository<EmployeeWork
 
     Optional<EmployeeWorkingDay> findByWorkingDateAndEmployeeId(LocalDate workingDate, Long employeeId);
 
+    long countByWorkingDate(LocalDate workingDate);
+
 }

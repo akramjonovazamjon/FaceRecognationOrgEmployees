@@ -2,6 +2,7 @@ package com.example.lionprintfirstproject.controller;
 
 import com.example.lionprintfirstproject.controller.vm.EmployeeResponse;
 import com.example.lionprintfirstproject.controller.vm.EmployeeVm;
+import com.example.lionprintfirstproject.dto.EmployeeCount;
 import com.example.lionprintfirstproject.dto.ResponseData;
 import com.example.lionprintfirstproject.dto.employee.CreateEmployee;
 import com.example.lionprintfirstproject.dto.employee.UpdateEmployee;
@@ -58,7 +59,8 @@ public class EmployeeController {
     @GetMapping
     public ResponseData<List<EmployeeVm>> getAll(Pageable pageable) {
         List<EmployeeVm> employeeList = service.getAllEmployees(pageable);
-        return ResponseData.of(employeeList);
+        EmployeeCount employeesCount = service.getEmployeesCount();
+        return ResponseData.of(employeeList, employeesCount);
     }
 
     @GetMapping("/{id}")
@@ -70,12 +72,6 @@ public class EmployeeController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         service.delete(id);
-    }
-
-    @GetMapping("/count")
-    public ResponseData<Long> countAll() {
-        Long count = service.getEmployeesCount();
-        return ResponseData.of(count);
     }
 
     @GetMapping("/departments/{id}")
