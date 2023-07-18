@@ -1,5 +1,7 @@
 package com.example.lionprintfirstproject.dto;
 
+import com.example.lionprintfirstproject.dto.employee.EmployeeCount;
+
 public record ResponseData<T>(T result, ErrorData error, EmployeeCount count) {
 
     public static <T> ResponseData<T> of(T result) {

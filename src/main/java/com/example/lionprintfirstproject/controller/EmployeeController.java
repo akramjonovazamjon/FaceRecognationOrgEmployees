@@ -2,7 +2,7 @@ package com.example.lionprintfirstproject.controller;
 
 import com.example.lionprintfirstproject.controller.vm.EmployeeResponse;
 import com.example.lionprintfirstproject.controller.vm.EmployeeVm;
-import com.example.lionprintfirstproject.dto.EmployeeCount;
+import com.example.lionprintfirstproject.dto.employee.EmployeeCount;
 import com.example.lionprintfirstproject.dto.ResponseData;
 import com.example.lionprintfirstproject.dto.employee.CreateEmployee;
 import com.example.lionprintfirstproject.dto.employee.UpdateEmployee;

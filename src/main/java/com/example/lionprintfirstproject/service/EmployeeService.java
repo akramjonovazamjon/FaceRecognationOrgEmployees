@@ -1,7 +1,7 @@
 package com.example.lionprintfirstproject.service;
 
 import com.example.lionprintfirstproject.controller.vm.EmployeeVm;
-import com.example.lionprintfirstproject.dto.EmployeeCount;
+import com.example.lionprintfirstproject.dto.employee.EmployeeCount;
 import com.example.lionprintfirstproject.dto.employee.CreateEmployee;
 import com.example.lionprintfirstproject.dto.employee.UpdateEmployee;
 import com.example.lionprintfirstproject.entity.Department;
