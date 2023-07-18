@@ -3,6 +3,7 @@ package com.example.lionprintfirstproject.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.CacheControl;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -57,7 +58,8 @@ public class SecurityConfig {
             @Override
             public void addResourceHandlers(ResourceHandlerRegistry registry) {
                 registry.addResourceHandler("/images/**")
-                        .addResourceLocations("classpath:/images/");
+                        .addResourceLocations("classpath:/images/")
+                        .setCacheControl(CacheControl.noCache());
             }
         };
     }
