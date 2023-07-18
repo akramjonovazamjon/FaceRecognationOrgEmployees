@@ -68,7 +68,7 @@ public class EmployeeService {
             byte[] mainContent = picture.getBytes();
             outputStream.write(mainContent);
         }
-        return imageUrl;
+        return "http://192.168.0.133:8008/" + imageUrl;
     }
 
     public Employee getById(Long id) {
