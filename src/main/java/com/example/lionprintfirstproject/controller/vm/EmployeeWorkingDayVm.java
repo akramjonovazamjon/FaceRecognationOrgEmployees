@@ -9,9 +9,9 @@ public record EmployeeWorkingDayVm(
         Long id,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
         LocalDate workingDate,
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
         LocalTime arrivalTime,
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
         LocalTime exitTime,
         boolean inWork
 ) {
