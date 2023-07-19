@@ -104,7 +104,7 @@ public class EmployeeService {
 
     public EmployeeCount getEmployeesCount() {
         long all = repository.count();
-        long here = employeeWorkingDayRepository.countByWorkingDateAndInWork(LocalDate.now(), true);
+        long here = employeeWorkingDayRepository.countByWorkingDate(LocalDate.now());
         return new EmployeeCount(all, here, all - here);
     }
 
