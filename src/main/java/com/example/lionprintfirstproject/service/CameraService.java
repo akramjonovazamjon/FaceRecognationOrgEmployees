@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Enumeration;
@@ -44,7 +45,7 @@ public class CameraService {
         }
     }
 
-    public String getEmployeeId(HttpServletRequest request){
+    public String getEmployeeId(HttpServletRequest request) {
         StandardMultipartHttpServletRequest multipartHttpServletRequest = (StandardMultipartHttpServletRequest) request;
         Enumeration<String> parameterNames = multipartHttpServletRequest.getParameterNames();
         Iterator<String> stringIterator = parameterNames.asIterator();
@@ -60,7 +61,7 @@ public class CameraService {
 
     private void saveEmployeeActionsForArrival(Long employeeId) {
 
-        Optional<EmployeeWorkingDay> optionalEmployeeWorkingDay = repository.findByWorkingDateAndEmployeeIdAndInWork(LocalDate.now(), employeeId,true);
+        Optional<EmployeeWorkingDay> optionalEmployeeWorkingDay = repository.findByWorkingDateAndEmployeeIdAndInWork(LocalDate.now(), employeeId, true);
 
         if (optionalEmployeeWorkingDay.isEmpty()) {
             save(employeeId);
@@ -69,7 +70,7 @@ public class CameraService {
 
     private void saveEmployeeActionsForExit(Long employeeId) {
 
-        Optional<EmployeeWorkingDay> optionalEmployeeWorkingDay = repository.findByWorkingDateAndEmployeeIdAndInWork(LocalDate.now(), employeeId,true  );
+        Optional<EmployeeWorkingDay> optionalEmployeeWorkingDay = repository.findByWorkingDateAndEmployeeIdAndInWork(LocalDate.now(), employeeId, true);
 
         optionalEmployeeWorkingDay.ifPresent(this::update);
     }
@@ -78,7 +79,7 @@ public class CameraService {
 
         employeeWorkingDay.setExitTime(LocalTime.now());
         employeeWorkingDay.setInWork(false);
-
+        employeeWorkingDay.setWorkingHour(Duration.between(employeeWorkingDay.getArrivalTime(), employeeWorkingDay.getExitTime()));
         repository.save(employeeWorkingDay);
     }
 

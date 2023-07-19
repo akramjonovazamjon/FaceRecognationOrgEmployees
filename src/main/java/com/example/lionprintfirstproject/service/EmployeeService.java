@@ -104,7 +104,7 @@ public class EmployeeService {
 
     public EmployeeCount getEmployeesCount() {
         long all = repository.count();
-        long here = employeeWorkingDayRepository.countByWorkingDate(LocalDate.now());
+        long here = employeeWorkingDayRepository.countByWorkingDateAndInWork(LocalDate.now(), true);
         return new EmployeeCount(all, here, all - here);
     }
 
@@ -136,8 +136,12 @@ public class EmployeeService {
     }
 
     private EmployeeVm convertEmployeeToEmployeeVm(Employee employee) {
-        EmployeeWorkingDay employeeWorkingDay = employeeWorkingDayRepository.findByWorkingDateAndEmployeeId(LocalDate.now(), employee.getId()).orElse(null);
-        return mapper.asEmployeeVm(employee, employeeWorkingDay);
+        List<EmployeeWorkingDay> arrivalTime = employeeWorkingDayRepository.findByWorkingDateAndEmployeeIdOrderByArrivalTime(LocalDate.now(), employee.getId());
+        if (arrivalTime.isEmpty()) {
+            return mapper.asEmployeeVm(employee, null);
+        } else {
+            return mapper.asEmployeeVm(employee, arrivalTime.get(0));
+        }
     }
 
 }

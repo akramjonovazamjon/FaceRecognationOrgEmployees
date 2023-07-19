@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -27,6 +28,8 @@ public class EmployeeWorkingDay {
     private LocalTime exitTime;
     @Column(name = "in_work")
     private boolean inWork;
+    @Column(name = "working_hour")
+    private Duration workingHour;
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne
     @JoinColumn(name = "employee_id")
