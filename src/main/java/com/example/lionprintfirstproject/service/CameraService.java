@@ -31,60 +31,45 @@ public class CameraService {
     }
 
     public void detectFaceArrival(HttpServletRequest request) {
-
-        StandardMultipartHttpServletRequest multipartHttpServletRequest = (StandardMultipartHttpServletRequest) request;
-        Enumeration<String> parameterNames = multipartHttpServletRequest.getParameterNames();
-        Iterator<String> stringIterator = parameterNames.asIterator();
-
-        if (!stringIterator.hasNext())
-            return;
-
-        String next = stringIterator.next();
-        String json = multipartHttpServletRequest.getParameter(next);
-
-        String employeeId = getEmployeeId(json);
-
+        String employeeId = getEmployeeId(request);
         if (employeeId != null) {
             saveEmployeeActionsForArrival(Long.valueOf(employeeId));
         }
     }
 
     public void detectFaceExit(HttpServletRequest request) {
-
-        StandardMultipartHttpServletRequest multipartHttpServletRequest = (StandardMultipartHttpServletRequest) request;
-        Enumeration<String> parameterNames = multipartHttpServletRequest.getParameterNames();
-        Iterator<String> stringIterator = parameterNames.asIterator();
-
-        if (!stringIterator.hasNext())
-            return;
-
-        String next = stringIterator.next();
-        String json = multipartHttpServletRequest.getParameter(next);
-
-        String employeeId = getEmployeeId(json);
-
+        String employeeId = getEmployeeId(request);
         if (employeeId != null) {
             saveEmployeeActionsForExit(Long.valueOf(employeeId));
         }
     }
 
+    public String getEmployeeId(HttpServletRequest request){
+        StandardMultipartHttpServletRequest multipartHttpServletRequest = (StandardMultipartHttpServletRequest) request;
+        Enumeration<String> parameterNames = multipartHttpServletRequest.getParameterNames();
+        Iterator<String> stringIterator = parameterNames.asIterator();
+
+        if (!stringIterator.hasNext())
+            return null;
+
+        String next = stringIterator.next();
+        String json = multipartHttpServletRequest.getParameter(next);
+
+        return getEmployeeId(json);
+    }
+
     private void saveEmployeeActionsForArrival(Long employeeId) {
 
-        Optional<EmployeeWorkingDay> optionalEmployeeWorkingDay = repository.findByWorkingDateAndEmployeeId(LocalDate.now(), employeeId);
+        Optional<EmployeeWorkingDay> optionalEmployeeWorkingDay = repository.findByWorkingDateAndEmployeeIdAndInWork(LocalDate.now(), employeeId,true);
 
         if (optionalEmployeeWorkingDay.isEmpty()) {
             save(employeeId);
-        } else {
-            EmployeeWorkingDay employeeWorkingDay = optionalEmployeeWorkingDay.get();
-            employeeWorkingDay.setInWork(true);
-            employeeWorkingDay.setExitTime(null);
-            repository.save(employeeWorkingDay);
         }
     }
 
     private void saveEmployeeActionsForExit(Long employeeId) {
 
-        Optional<EmployeeWorkingDay> optionalEmployeeWorkingDay = repository.findByWorkingDateAndEmployeeId(LocalDate.now(), employeeId);
+        Optional<EmployeeWorkingDay> optionalEmployeeWorkingDay = repository.findByWorkingDateAndEmployeeIdAndInWork(LocalDate.now(), employeeId,true  );
 
         optionalEmployeeWorkingDay.ifPresent(this::update);
     }

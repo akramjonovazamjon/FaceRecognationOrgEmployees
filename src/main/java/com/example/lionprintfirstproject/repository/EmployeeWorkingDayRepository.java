@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface EmployeeWorkingDayRepository extends JpaRepository<EmployeeWorkingDay, Long> {
 
-    Optional<EmployeeWorkingDay> findByWorkingDateAndEmployeeId(LocalDate workingDate, Long employeeId);
+    Optional<EmployeeWorkingDay> findByWorkingDateAndEmployeeIdAndInWork(LocalDate workingDate, Long employeeId, boolean inWork);
 
     long countByWorkingDate(LocalDate workingDate);
 
