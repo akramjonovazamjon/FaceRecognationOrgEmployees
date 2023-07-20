@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -62,5 +63,18 @@ public class SecurityConfig {
                         .setCacheControl(CacheControl.noCache());
             }
         };
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        RestTemplate restTemplate = new RestTemplate();
+
+        // Create Digest Authentication Interceptor with the username and password
+        DigestAuthenticationInterceptor interceptor = new DigestAuthenticationInterceptor("username", "password");
+
+        // Add the interceptor to the RestTemplate
+        restTemplate.getInterceptors().add(interceptor);
+
+        return restTemplate;
     }
 }

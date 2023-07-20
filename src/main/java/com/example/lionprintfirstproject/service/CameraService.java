@@ -1,13 +1,21 @@
 package com.example.lionprintfirstproject.service;
 
+import com.example.lionprintfirstproject.dto.CameraResponse;
 import com.example.lionprintfirstproject.dto.CameraResult;
+import com.example.lionprintfirstproject.dto.employee.EmployeeForCamera;
+import com.example.lionprintfirstproject.dto.employee.UserInfo;
+import com.example.lionprintfirstproject.dto.employee.Valid;
 import com.example.lionprintfirstproject.entity.Employee;
 import com.example.lionprintfirstproject.entity.EmployeeWorkingDay;
 import com.example.lionprintfirstproject.repository.EmployeeWorkingDayRepository;
 import com.google.gson.Gson;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
 
 import java.time.Duration;
@@ -23,6 +31,7 @@ public class CameraService {
     private final EmployeeWorkingDayRepository repository;
     private final Gson gson;
     private final EmployeeService employeeService;
+    private final RestTemplate restTemplate;
 
     public String getEmployeeId(String json) {
 
@@ -91,5 +100,16 @@ public class CameraService {
 
         repository.save(employeeWorkingDay);
     }
+
+    public boolean saveEmployeeToCamera(Employee employee, MultipartFile image) {
+        EmployeeForCamera employeeForCamera =
+                EmployeeForCamera.of(new UserInfo(new Valid(true, employee.getBeginTime(), employee.getEndTime()), employee.getFirstName(), "normal", String.valueOf(employee.getId())));
+
+        HttpEntity<?> employeeForSave = new HttpEntity<>(employeeForCamera);
+
+        restTemplate.exchange("http://192.168.0.163/ISAPI/AccessControl/UserInfo/Record?format=json", HttpMethod.POST, employeeForSave, CameraResponse.class)
+
+    }
+
 
 }

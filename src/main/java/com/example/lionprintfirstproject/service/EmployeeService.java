@@ -51,7 +51,8 @@ public class EmployeeService {
 
         Employee employee = mapper.asNewEmployee(dto, imageUrl, department, job);
 
-        return repository.save(employee);
+        Employee savedEmployee = repository.save(employee);
+
     }
 
     private static final String BASE_IMAGE_PATH = "src/main/resources/";

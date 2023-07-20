@@ -5,6 +5,7 @@ import com.example.lionprintfirstproject.controller.vm.EmployeeVm;
 import com.example.lionprintfirstproject.dto.employee.EmployeeCount;
 import com.example.lionprintfirstproject.dto.ResponseData;
 import com.example.lionprintfirstproject.dto.employee.CreateEmployee;
+import com.example.lionprintfirstproject.dto.employee.Gender;
 import com.example.lionprintfirstproject.dto.employee.UpdateEmployee;
 import com.example.lionprintfirstproject.entity.Employee;
 import com.example.lionprintfirstproject.mapper.EmployeeMapper;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -35,9 +37,12 @@ public class EmployeeController {
             @RequestParam(name = "address") String address,
             @RequestParam(name = "file") MultipartFile file,
             @RequestParam(name = "departmentId") Long departmentId,
-            @RequestParam(name = "jobId") Long jobId
-    ) throws IOException {
-        Employee employee = service.create(new CreateEmployee(firstName, lastName, middleName, phoneNumber, address), file, departmentId, jobId);
+            @RequestParam(name = "jobId") Long jobId,
+            @RequestParam(name = "startTime")LocalDateTime beginTime,
+            @RequestParam(name = "endTime")LocalDateTime endTime,
+            @RequestParam(name = "gender") Gender gender
+            ) throws IOException {
+        Employee employee = service.create(new CreateEmployee(firstName, lastName, middleName, phoneNumber, address, beginTime, endTime, gender), file, departmentId, jobId);
         return ResponseData.of(mapper.asEmployee(employee));
     }
 
