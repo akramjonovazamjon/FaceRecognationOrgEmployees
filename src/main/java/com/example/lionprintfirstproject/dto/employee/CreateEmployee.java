@@ -1,4 +1,4 @@
-package com.example.lionprintfirstproject.dto.camera.employee;
+package com.example.lionprintfirstproject.dto.employee;
 
 import jakarta.validation.constraints.NotBlank;
 

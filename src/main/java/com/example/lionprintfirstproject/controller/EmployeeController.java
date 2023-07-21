@@ -2,11 +2,11 @@ package com.example.lionprintfirstproject.controller;
 
 import com.example.lionprintfirstproject.controller.vm.EmployeeResponse;
 import com.example.lionprintfirstproject.controller.vm.EmployeeVm;
-import com.example.lionprintfirstproject.dto.camera.employee.EmployeeCount;
+import com.example.lionprintfirstproject.dto.employee.EmployeeCount;
 import com.example.lionprintfirstproject.dto.ResponseData;
-import com.example.lionprintfirstproject.dto.camera.employee.CreateEmployee;
-import com.example.lionprintfirstproject.dto.camera.employee.Gender;
-import com.example.lionprintfirstproject.dto.camera.employee.UpdateEmployee;
+import com.example.lionprintfirstproject.dto.employee.CreateEmployee;
+import com.example.lionprintfirstproject.dto.employee.Gender;
+import com.example.lionprintfirstproject.dto.employee.UpdateEmployee;
 import com.example.lionprintfirstproject.entity.Employee;
 import com.example.lionprintfirstproject.mapper.EmployeeMapper;
 import com.example.lionprintfirstproject.service.EmployeeService;
