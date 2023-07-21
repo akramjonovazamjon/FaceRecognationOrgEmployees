@@ -1,9 +1,12 @@
 package com.example.lionprintfirstproject.entity;
 
+import com.example.lionprintfirstproject.dto.employee.Gender;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,4 +37,10 @@ public class Employee {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne
     private Job job;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+    private boolean isAddedToEnter;
+    private boolean isAddedToExit;
+    private LocalDateTime beginTime;
+    private LocalDateTime endTime;
 }

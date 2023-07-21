@@ -36,6 +36,7 @@ public class EmployeeService {
     private final DepartmentService departmentService;
     private final JobService jobService;
     private final EmployeeWorkingDayRepository employeeWorkingDayRepository;
+    private final CameraEmployeeService cameraEmployeeService;
 
     public Employee create(CreateEmployee dto, MultipartFile file, Long departmentId, Long jobId) throws IOException {
 
@@ -50,6 +51,12 @@ public class EmployeeService {
         String imageUrl = saveUserPicture(file);
 
         Employee employee = mapper.asNewEmployee(dto, imageUrl, department, job);
+
+        Employee savedEmployee = repository.save(employee);
+        boolean b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee, file, "http://192.168.0.192");
+        employee.setAddedToExit(b);
+        b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee, file, "http://192.168.0.191");
+        employee.setAddedToEnter(b);
 
         return repository.save(employee);
     }
