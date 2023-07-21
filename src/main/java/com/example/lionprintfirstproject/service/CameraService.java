@@ -2,9 +2,7 @@ package com.example.lionprintfirstproject.service;
 
 import com.example.lionprintfirstproject.dto.CameraResponse;
 import com.example.lionprintfirstproject.dto.CameraResult;
-import com.example.lionprintfirstproject.dto.employee.EmployeeForCamera;
-import com.example.lionprintfirstproject.dto.employee.UserInfo;
-import com.example.lionprintfirstproject.dto.employee.Valid;
+import com.example.lionprintfirstproject.dto.camera.*;
 import com.example.lionprintfirstproject.entity.Employee;
 import com.example.lionprintfirstproject.entity.EmployeeWorkingDay;
 import com.example.lionprintfirstproject.repository.EmployeeWorkingDayRepository;
@@ -13,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +22,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -100,16 +100,7 @@ public class CameraService {
 
         repository.save(employeeWorkingDay);
     }
-
-    public boolean saveEmployeeToCamera(Employee employee, MultipartFile image) {
-        EmployeeForCamera employeeForCamera =
-                EmployeeForCamera.of(new UserInfo(new Valid(true, employee.getBeginTime(), employee.getEndTime()), employee.getFirstName(), "normal", String.valueOf(employee.getId())));
-
-        HttpEntity<?> employeeForSave = new HttpEntity<>(employeeForCamera);
-
-        restTemplate.exchange("http://192.168.0.163/ISAPI/AccessControl/UserInfo/Record?format=json", HttpMethod.POST, employeeForSave, CameraResponse.class)
-
-    }
-
-
 }
+
+
+

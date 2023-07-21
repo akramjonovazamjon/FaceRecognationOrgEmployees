@@ -1,5 +1,6 @@
-package com.example.lionprintfirstproject.dto.employee;
+package com.example.lionprintfirstproject.dto.camera;
 
+import com.example.lionprintfirstproject.dto.camera.UserInfo;
 import com.google.gson.annotations.SerializedName;
 import lombok.*;
 
@@ -11,12 +12,12 @@ import lombok.*;
 public class EmployeeForCamera {
 
     @SerializedName("UserInfo")
-    private UserInfo userInfo;
+    private UserInfo UserInfo;
 
-    public static EmployeeForCamera of(UserInfo userInfo) {
+    public static EmployeeForCamera of(com.example.lionprintfirstproject.dto.camera.UserInfo userInfo) {
         return EmployeeForCamera
                 .builder()
-                .userInfo(userInfo)
+                .UserInfo(userInfo)
                 .build();
     }
 }

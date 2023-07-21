@@ -3,7 +3,7 @@ spring:
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:lion_print_db}
     username: ${POSTGRES_USER:postgres}
-    password: ${POSTGRES_PASSWORD:azamjon1999}
+    password: ${POSTGRES_PASSWORD:dbkey}
     driverClassName: org.postgresql.Driver
 
   jpa:

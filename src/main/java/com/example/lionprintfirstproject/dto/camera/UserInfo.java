@@ -1,4 +1,4 @@
-package com.example.lionprintfirstproject.dto.employee;
+package com.example.lionprintfirstproject.dto.camera;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.*;
@@ -11,7 +11,7 @@ import lombok.*;
 public class UserInfo{
 
 	@SerializedName("Valid")
-	private Valid valid;
+	private Valid Valid;
 
 	@SerializedName("name")
 	private String name;

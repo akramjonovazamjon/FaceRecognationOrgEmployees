@@ -1,5 +1,7 @@
 package com.example.lionprintfirstproject.controller.vm;
 
+import java.time.LocalDateTime;
+
 public record EmployeeResponse(
         Long id,
         String firstName,
@@ -9,6 +11,8 @@ public record EmployeeResponse(
         String address,
         String imageUrl,
         DepartmentVm department,
-        JobVm job
+        JobVm job,
+        LocalDateTime beginTime,
+        LocalDateTime endTime
 ) {
 }

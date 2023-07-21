@@ -1,4 +1,4 @@
-package com.example.lionprintfirstproject.dto.employee;
+package com.example.lionprintfirstproject.dto.camera.employee;
 
 public record UpdateEmployee(
         String firstName,

@@ -1,6 +1,6 @@
 package com.example.lionprintfirstproject.entity;
 
-import com.example.lionprintfirstproject.dto.employee.Gender;
+import com.example.lionprintfirstproject.dto.camera.employee.Gender;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;

@@ -1,9 +1,9 @@
 package com.example.lionprintfirstproject.service;
 
 import com.example.lionprintfirstproject.controller.vm.EmployeeVm;
-import com.example.lionprintfirstproject.dto.employee.EmployeeCount;
-import com.example.lionprintfirstproject.dto.employee.CreateEmployee;
-import com.example.lionprintfirstproject.dto.employee.UpdateEmployee;
+import com.example.lionprintfirstproject.dto.camera.employee.EmployeeCount;
+import com.example.lionprintfirstproject.dto.camera.employee.CreateEmployee;
+import com.example.lionprintfirstproject.dto.camera.employee.UpdateEmployee;
 import com.example.lionprintfirstproject.entity.Department;
 import com.example.lionprintfirstproject.entity.Employee;
 import com.example.lionprintfirstproject.entity.EmployeeWorkingDay;
@@ -36,6 +36,7 @@ public class EmployeeService {
     private final DepartmentService departmentService;
     private final JobService jobService;
     private final EmployeeWorkingDayRepository employeeWorkingDayRepository;
+    private final CameraEmployeeService cameraEmployeeService;
 
     public Employee create(CreateEmployee dto, MultipartFile file, Long departmentId, Long jobId) throws IOException {
 
@@ -52,7 +53,12 @@ public class EmployeeService {
         Employee employee = mapper.asNewEmployee(dto, imageUrl, department, job);
 
         Employee savedEmployee = repository.save(employee);
+        boolean b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee, file,"http://192.168.0.192");
+        employee.setAddedToEnter(b);
+         b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee, file,"http://192.168.0.191");
+        employee.setAddedToEnter(b);
 
+        return repository.save(employee);
     }
 
     private static final String BASE_IMAGE_PATH = "src/main/resources/";
