@@ -5,6 +5,7 @@ import com.example.lionprintfirstproject.dto.camera.*;
 import com.example.lionprintfirstproject.entity.Employee;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -25,25 +26,23 @@ public class CameraEmployeeService {
 
         HttpEntity<?> employeeForSave = new HttpEntity<>(employeeForCamera);
 
-        ResponseEntity<CameraResponse> exchange = restTemplate.exchange(host+"/ISAPI/AccessControl/UserInfo/Record?format=json", HttpMethod.POST, employeeForSave, CameraResponse.class);
-        if (Objects.requireNonNull(exchange.getBody()).getStatusCode()!=1) {
+        ResponseEntity<CameraResponse> exchange = restTemplate.exchange(host + "/ISAPI/AccessControl/UserInfo/Record?format=json", HttpMethod.POST, employeeForSave, CameraResponse.class);
+        if (Objects.requireNonNull(exchange.getBody()).getStatusCode() != 1) {
             return false;
         }
         MultiValueMap<String, Object> formData = new LinkedMultiValueMap<>();
-        formData.add("FaceDataRecord", new FaceDateRecord(employee.getId().toString(), "blackFD", "1"));
-        formData.add("img", image);
+        formData.add("FaceDataRecord", new Gson().toJson(new FaceDateRecord(String.valueOf(employee.getId()), "blackFD", "1")));
+        String[] split = employee.getImageUrl().split("/");
+        String s = split[split.length - 1];
+        formData.add("img", new FileSystemResource("src/main/resources/images/" + s));
 
-        // Set the Content-Type header to "multipart/form-data"
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
-        // Create the HttpEntity with headers and form data
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(formData, headers);
 
-        ResponseEntity<CameraResponse> exchange1 = restTemplate.exchange(host + "/ISAPI/Intelligent/FDLib/FDSetUp?format=json", HttpMethod.POST, requestEntity, CameraResponse.class);
-        if (Objects.requireNonNull(exchange1.getBody()).getStatusCode()!=1) {
-            return false;
-        }
-        return true;
+        ResponseEntity<CameraResponse> exchange1 = restTemplate.exchange(host + "/ISAPI/Intelligent/FDLib/FDSetUp?format=json", HttpMethod.PUT, requestEntity, CameraResponse.class);
+
+        return Objects.requireNonNull(exchange1.getBody()).getStatusCode() == 1;
     }
 }

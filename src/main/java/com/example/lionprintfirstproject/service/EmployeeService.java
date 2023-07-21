@@ -53,9 +53,9 @@ public class EmployeeService {
         Employee employee = mapper.asNewEmployee(dto, imageUrl, department, job);
 
         Employee savedEmployee = repository.save(employee);
-        boolean b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee, file,"http://192.168.0.192");
-        employee.setAddedToEnter(b);
-         b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee, file,"http://192.168.0.191");
+        boolean b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee, file, "http://192.168.0.192");
+        employee.setAddedToExit(b);
+        b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee, file, "http://192.168.0.191");
         employee.setAddedToEnter(b);
 
         return repository.save(employee);
