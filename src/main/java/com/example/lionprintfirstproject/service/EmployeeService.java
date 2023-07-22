@@ -57,7 +57,7 @@ public class EmployeeService {
         Employee savedEmployee = repository.save(employee);
         boolean b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee,HIK_VISION_ENTER ,true);
         employee.setAddedToEnter(b);
-        b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee,HIK_VISION_ENTER,true);
+        b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee,HIK_VISION_EXIT,true);
         employee.setAddedToExit(b);
 
         return repository.save(employee);
@@ -107,7 +107,7 @@ public class EmployeeService {
         Employee savedEmployee = repository.save(employee);
         boolean b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee,HIK_VISION_ENTER ,false);
         employee.setAddedToEnter(b);
-        b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee,HIK_VISION_ENTER,false);
+        b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee,HIK_VISION_EXIT,false);
         employee.setAddedToExit(b);
         repository.save(employee);
     }
