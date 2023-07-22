@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.apache.hc.client5.http.auth.AuthScope;
 import org.apache.hc.client5.http.auth.UsernamePasswordCredentials;
 import org.apache.hc.client5.http.impl.auth.BasicCredentialsProvider;
-
 import org.apache.hc.client5.http.classic.HttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -32,7 +31,19 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable().authorizeHttpRequests().requestMatchers("/auth/**", "/cameras/**", "/images/**").permitAll().anyRequest().authenticated().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        http
+                .cors().and()
+                .csrf().disable()
+                .authorizeHttpRequests()
+                .requestMatchers("/auth/**", "/cameras/**", "/images/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -42,7 +53,11 @@ public class SecurityConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("*").allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS").allowedHeaders("*");
+                registry
+                        .addMapping("/**")
+                        .allowedOrigins("*")
+                        .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+                        .allowedHeaders("*");
             }
         };
     }
@@ -52,13 +67,16 @@ public class SecurityConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addResourceHandlers(ResourceHandlerRegistry registry) {
-                registry.addResourceHandler("/images/**").addResourceLocations("classpath:/images/").setCacheControl(CacheControl.noCache());
+                registry
+                        .addResourceHandler("/images/**")
+                        .addResourceLocations("classpath:/images/")
+                        .setCacheControl(CacheControl.noCache());
             }
         };
     }
 
     @Bean
-    public RestTemplateBuilder restTemplateBuilder(){
+    public RestTemplateBuilder restTemplateBuilder() {
         return new RestTemplateBuilder();
     }
 
@@ -68,10 +86,10 @@ public class SecurityConfig {
 
         UsernamePasswordCredentials credentials = new UsernamePasswordCredentials("admin", "lionprint2023".toCharArray());
         BasicCredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-        credentialsProvider.setCredentials(new AuthScope(null,null,-1,null,null),credentials);
+        credentialsProvider.setCredentials(new AuthScope(null, null, -1, null, null), credentials);
 
         HttpClient httpClient = HttpClients.custom()
-                        .setDefaultCredentialsProvider(credentialsProvider).build();
+                .setDefaultCredentialsProvider(credentialsProvider).build();
 
         return builder
                 .requestFactory(() -> {
@@ -79,21 +97,4 @@ public class SecurityConfig {
                 })
                 .build();
     }
-
-//    @Primary
-//    @Bean
-//    public RestTemplate restTemplate1(RestTemplateBuilder builder) {
-//        Credentials credentials = new UsernamePasswordCredentials("admin", "lionprint2023");
-//        CredentialsProvider credentialsProvider = new org.apache.http.impl.client.BasicCredentialsProvider();
-//        credentialsProvider.setCredentials(org.apache.http.auth.AuthScope.ANY, credentials);
-//
-//        CloseableHttpClient httpClient = HttpClients
-//                .custom()
-//                .setDefaultCredentialsProvider(credentialsProvider)
-//                .build();
-//
-//        return builder
-//                .requestFactory(() -> new HttpComponentsClientHttpRequestFactory(httpClient))
-//                .build();
-//    }
 }
