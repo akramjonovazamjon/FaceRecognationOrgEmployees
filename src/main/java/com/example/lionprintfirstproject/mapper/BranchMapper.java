@@ -13,6 +13,8 @@ import java.util.List;
 public interface BranchMapper {
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "name", source = "dto.name")
+    @Mapping(target = "info", source = "dto.info")
     Branch asNewBranch(BranchCreate dto, Organization organization);
 
     BranchVm asBranchVm(Branch branch);
