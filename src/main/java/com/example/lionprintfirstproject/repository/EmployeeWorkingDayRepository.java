@@ -17,6 +17,6 @@ public interface EmployeeWorkingDayRepository extends JpaRepository<EmployeeWork
     @Query("SELECT COUNT(DISTINCT e.employee) FROM EmployeeWorkingDay e WHERE e.workingDate = :workingDate")
     long countByWorkingDate(LocalDate workingDate);
 
-    List<EmployeeWorkingDay> findByWorkingDateAndEmployeeIdOrderByArrivalTime(LocalDate workingDate, Long employeeId);
+    List<EmployeeWorkingDay> findByWorkingDateAndEmployeeIdOrderByArrivalTimeDesc(LocalDate workingDate, Long employeeId);
 
 }

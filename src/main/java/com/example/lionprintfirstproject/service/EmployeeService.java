@@ -152,7 +152,7 @@ public class EmployeeService {
     }
 
     private EmployeeVm convertEmployeeToEmployeeVm(Employee employee) {
-        List<EmployeeWorkingDay> arrivalTime = employeeWorkingDayRepository.findByWorkingDateAndEmployeeIdOrderByArrivalTime(LocalDate.now(), employee.getId());
+        List<EmployeeWorkingDay> arrivalTime = employeeWorkingDayRepository.findByWorkingDateAndEmployeeIdOrderByArrivalTimeDesc(LocalDate.now(), employee.getId());
         if (arrivalTime.isEmpty()) {
             return mapper.asEmployeeVm(employee, null);
         } else {
