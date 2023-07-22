@@ -11,11 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
 
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+import java.time.*;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Optional;
@@ -30,9 +26,9 @@ public class CameraService {
     public CameraDateAndEmployeeId getEmployeeId(String json) {
 
         CameraResult cameraResult = gson.fromJson(json, CameraResult.class);
-        LocalDateTime dateTime = LocalDateTime.parse(cameraResult.getDateTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        OffsetDateTime dateTime = OffsetDateTime.parse(cameraResult.getDateTime());
         String employeeNoString = cameraResult.getAccessControllerEvent().getEmployeeNoString();
-        return new CameraDateAndEmployeeId(dateTime, Long.valueOf(employeeNoString));
+        return new CameraDateAndEmployeeId(dateTime.toLocalDateTime(), Long.valueOf(employeeNoString));
     }
 
     public void detectFaceArrival(HttpServletRequest request) {
@@ -76,7 +72,7 @@ public class CameraService {
 
         Optional<EmployeeWorkingDay> optionalEmployeeWorkingDay = repository.findByWorkingDateAndEmployeeIdAndInWork(LocalDate.now(), cameraDateAndEmployeeId.getEmployeeId(), true);
 
-        optionalEmployeeWorkingDay.ifPresent(employeeWorkingDay -> update(employeeWorkingDay,cameraDateAndEmployeeId.getDateTime()));
+        optionalEmployeeWorkingDay.ifPresent(employeeWorkingDay -> update(employeeWorkingDay, cameraDateAndEmployeeId.getDateTime()));
     }
 
     private void update(EmployeeWorkingDay employeeWorkingDay, LocalDateTime localDateTime) {
