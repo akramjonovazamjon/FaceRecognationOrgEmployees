@@ -15,12 +15,15 @@ public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String name;
     private String info;
+    @ManyToOne
+    private Branch branch;
 
-    public void update(UpdateDepartment dto) {
+    public void update(UpdateDepartment dto, Branch branch) {
         setName(dto.name());
         setInfo(dto.info());
+        setBranch(branch);
     }
 }

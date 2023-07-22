@@ -10,6 +10,6 @@ public interface DepartmentRepository extends JpaRepository<Department, Long>, J
 
     boolean existsByName(String name);
 
-    boolean existsByNameAndIdNot(String name, Long id);
+    boolean existsByNameAndBranchIdAndIdNot(String name, Long branchId, Long id);
 
 }
