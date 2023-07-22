@@ -1,7 +1,10 @@
 package com.example.lionprintfirstproject.entity;
 
+import com.example.lionprintfirstproject.dto.branch.BranchUpdate;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,5 +20,12 @@ public class Branch {
     private String name;
     private String info;
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Organization organization;
+
+    public void update(BranchUpdate dto, Organization organization) {
+        setName(dto.name());
+        setInfo(dto.info());
+        setOrganization(organization);
+    }
 }
