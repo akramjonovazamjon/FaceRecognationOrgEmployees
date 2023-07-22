@@ -28,7 +28,7 @@ public class CameraService {
         CameraResult cameraResult = gson.fromJson(json, CameraResult.class);
         OffsetDateTime dateTime = OffsetDateTime.parse(cameraResult.getDateTime());
         String employeeNoString = cameraResult.getAccessControllerEvent().getEmployeeNoString();
-        return new CameraDateAndEmployeeId(dateTime.toLocalDateTime(), Long.valueOf(employeeNoString));
+        return new CameraDateAndEmployeeId(dateTime.toLocalDateTime(), employeeNoString == null ? null : Long.valueOf(employeeNoString));
     }
 
     public void detectFaceArrival(HttpServletRequest request) {
