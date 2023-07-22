@@ -55,9 +55,11 @@ public class EmployeeService {
         Employee employee = mapper.asNewEmployee(dto, imageUrl, department, job);
 
         Employee savedEmployee = repository.save(employee);
+
         boolean b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee,HIK_VISION_ENTER ,true);
         employee.setAddedToEnter(b);
         b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee,HIK_VISION_EXIT,true);
+
         employee.setAddedToExit(b);
 
         return repository.save(employee);
