@@ -51,4 +51,8 @@ public class BranchService {
         return repository.findAll(pageable).getContent();
     }
 
+    public List<Branch> getOrganizationBranches(Long organizationId) {
+        return repository.findAllByOrganizationId(organizationId);
+    }
+
 }
