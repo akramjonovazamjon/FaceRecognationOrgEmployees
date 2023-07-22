@@ -37,6 +37,8 @@ public class EmployeeService {
     private final JobService jobService;
     private final EmployeeWorkingDayRepository employeeWorkingDayRepository;
     private final CameraEmployeeService cameraEmployeeService;
+    private final String HIK_VISION_ENTER = "http://192.168.0.191";
+    private final String HIK_VISION_EXIT = "http://192.168.0.192";
 
     public Employee create(CreateEmployee dto, MultipartFile file, Long departmentId, Long jobId) throws IOException {
 
@@ -53,10 +55,10 @@ public class EmployeeService {
         Employee employee = mapper.asNewEmployee(dto, imageUrl, department, job);
 
         Employee savedEmployee = repository.save(employee);
-        boolean b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee, file, "http://192.168.0.192");
-        employee.setAddedToExit(b);
-        b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee, file, "http://192.168.0.191");
+        boolean b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee,HIK_VISION_ENTER ,true);
         employee.setAddedToEnter(b);
+        b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee,HIK_VISION_ENTER,true);
+        employee.setAddedToExit(b);
 
         return repository.save(employee);
     }
@@ -102,6 +104,11 @@ public class EmployeeService {
 
         mapper.updateEmployee(dto, imageUrl, department, job, employee);
 
+        Employee savedEmployee = repository.save(employee);
+        boolean b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee,HIK_VISION_ENTER ,false);
+        employee.setAddedToEnter(b);
+        b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee,HIK_VISION_ENTER,false);
+        employee.setAddedToExit(b);
         repository.save(employee);
     }
 

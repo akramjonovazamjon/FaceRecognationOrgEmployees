@@ -56,9 +56,12 @@ public class EmployeeController {
             @RequestParam(name = "address") String address,
             @RequestParam(name = "file") MultipartFile file,
             @RequestParam(name = "departmentId") Long departmentId,
-            @RequestParam(name = "jobId") Long jobId
+            @RequestParam(name = "jobId") Long jobId,
+            @RequestParam(name = "beginTime")LocalDateTime beginTime,
+            @RequestParam(name = "endTime")LocalDateTime endTime,
+            @RequestParam(name = "gender") Gender gender
     ) throws IOException {
-        service.update(new UpdateEmployee(firstName, lastName, middleName, phoneNumber, address), file, id, departmentId, jobId);
+        service.update(new UpdateEmployee(firstName, lastName, middleName, phoneNumber, address,beginTime,endTime,gender), file, id, departmentId, jobId);
     }
 
     @GetMapping

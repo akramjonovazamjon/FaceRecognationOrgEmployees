@@ -17,6 +17,7 @@ public record EmployeeResponse(
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
         LocalDateTime beginTime,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-        LocalDateTime endTime
+        LocalDateTime endTime,
+        String gender
 ) {
 }
