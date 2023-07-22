@@ -21,4 +21,6 @@ public class UserInfo{
 
 	@SerializedName("employeeNo")
 	private String employeeNo;
+	@SerializedName("gender")
+	private String gender;
 }
