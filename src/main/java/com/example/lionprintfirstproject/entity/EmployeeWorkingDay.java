@@ -1,13 +1,12 @@
 package com.example.lionprintfirstproject.entity;
 
+import com.example.lionprintfirstproject.dto.camera.CameraDateAndEmployeeId;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,10 +34,12 @@ public class EmployeeWorkingDay {
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    public static EmployeeWorkingDay of(Employee employee) {
+    public static EmployeeWorkingDay of(Employee employee, LocalDateTime localDateTime) {
+        LocalDate localDate = LocalDate.of(localDateTime.getYear(), localDateTime.getMonth(), localDateTime.getDayOfMonth());
+        LocalTime localTime = LocalTime.of(localDateTime.getHour(), localDateTime.getMinute());
         return EmployeeWorkingDay.builder()
-                .workingDate(LocalDate.now())
-                .arrivalTime(LocalTime.now())
+                .workingDate(localDate)
+                .arrivalTime(localTime)
                 .inWork(true)
                 .employee(employee)
                 .build();
