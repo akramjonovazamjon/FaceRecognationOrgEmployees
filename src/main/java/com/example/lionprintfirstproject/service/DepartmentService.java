@@ -3,6 +3,7 @@ package com.example.lionprintfirstproject.service;
 import com.example.lionprintfirstproject.dto.department.CreateDepartment;
 import com.example.lionprintfirstproject.dto.department.DepartmentFilter;
 import com.example.lionprintfirstproject.dto.department.UpdateDepartment;
+import com.example.lionprintfirstproject.entity.Branch;
 import com.example.lionprintfirstproject.entity.Department;
 import com.example.lionprintfirstproject.exception.department.DepartmentExistByNameException;
 import com.example.lionprintfirstproject.exception.department.DepartmentNotFoundByIdException;
@@ -22,6 +23,7 @@ import java.util.List;
 public class DepartmentService {
     private final DepartmentRepository repository;
     private final DepartmentMapper mapper;
+    private final BranchService branchService;
 
     public Department create(CreateDepartment dto) {
 
@@ -29,19 +31,23 @@ public class DepartmentService {
             throw new DepartmentExistByNameException(dto.name());
         }
 
-        Department department = mapper.asNewDepartment(dto);
+        Branch branch = branchService.getById(dto.branchId());
+
+        Department department = mapper.asNewDepartment(dto, branch);
 
         return repository.save(department);
     }
 
     public void update(Long id, UpdateDepartment dto) {
-        if (repository.existsByNameAndIdNot(dto.name(), id)) {
+        if (repository.existsByNameAndBranchIdAndIdNot(dto.name(), dto.branchId(), id)) {
             throw new DepartmentExistByNameException(dto.name());
         }
 
         Department department = repository.findById(id).orElseThrow(() -> new DepartmentNotFoundByIdException(id));
 
-        department.update(dto);
+        Branch branch = branchService.getById(dto.branchId());
+
+        department.update(dto, branch);
 
         repository.save(department);
     }
@@ -58,6 +64,8 @@ public class DepartmentService {
         Specification<Department> specification = buildDepartmentSpecification(filter);
         return repository.findAll(specification, pageable).getContent();
     }
+
+
 
     private Specification<Department> buildDepartmentSpecification(DepartmentFilter filter) {
         Specification<Department> spec = Specification.where(null);

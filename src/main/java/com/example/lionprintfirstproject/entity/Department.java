@@ -21,8 +21,9 @@ public class Department {
     @ManyToOne
     private Branch branch;
 
-    public void update(UpdateDepartment dto) {
+    public void update(UpdateDepartment dto, Branch branch) {
         setName(dto.name());
         setInfo(dto.info());
+        setBranch(branch);
     }
 }
