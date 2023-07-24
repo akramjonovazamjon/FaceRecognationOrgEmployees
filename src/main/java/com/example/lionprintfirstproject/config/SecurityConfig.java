@@ -59,21 +59,29 @@ public class SecurityConfig {
                         .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                         .allowedHeaders("*");
             }
-        };
-    }
 
-    @Bean
-    public WebMvcConfigurer webMvcConfigurer1() {
-        return new WebMvcConfigurer() {
             @Override
             public void addResourceHandlers(ResourceHandlerRegistry registry) {
-                registry
-                        .addResourceHandler("/images/**")
-                        .addResourceLocations("classpath:/images/")
+                String uploadedImagesPath = "file:src/main/resources/images/";
+                registry.addResourceHandler("/images/**")
+                        .addResourceLocations(uploadedImagesPath)
                         .setCacheControl(CacheControl.noCache());
             }
         };
     }
+
+//    @Bean
+//    public WebMvcConfigurer webMvcConfigurer1() {
+//        return new WebMvcConfigurer() {
+//            @Override
+//            public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//                registry
+//                        .addResourceHandler("/images/**")
+//                        .addResourceLocations("classpath:/images/")
+//                        .setCacheControl(CacheControl.noCache());
+//            }
+//        };
+//    }
 
     @Bean
     public RestTemplateBuilder restTemplateBuilder() {
