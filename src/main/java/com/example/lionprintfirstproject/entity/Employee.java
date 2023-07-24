@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
@@ -43,4 +44,7 @@ public class Employee {
     private boolean isAddedToExit;
     private LocalDateTime beginTime;
     private LocalDateTime endTime;
+    private LocalDate dateOfBirth;
+    @ManyToOne
+    private Schedule schedule;
 }
