@@ -18,7 +18,7 @@ public class ScheduleService {
     private final ScheduleMapper mapper;
 
     public Schedule create(CreateSchedule dto) {
-        if (repository.existsByStartAndEnd(dto.start(), dto.end())) {
+        if (repository.existsByStartTimeAndEndTime(dto.startTime(), dto.endTime())) {
             throw new ScheduleExistException();
         }
         Schedule schedule = mapper.asNewSchedule(dto);

@@ -8,5 +8,5 @@ import java.time.LocalTime;
 
 @Repository
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
-    boolean existsByStartAndEnd(LocalTime start, LocalTime end);
+    boolean existsByStartTimeAndEndTime(LocalTime start, LocalTime end);
 }
