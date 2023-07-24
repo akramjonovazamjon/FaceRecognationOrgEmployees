@@ -2,6 +2,7 @@ package com.example.lionprintfirstproject.dto.employee;
 
 import jakarta.validation.constraints.NotBlank;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record CreateEmployee(
@@ -12,6 +13,7 @@ public record CreateEmployee(
         @NotBlank(message = "error.invalid.address.not_blank") String address,
         LocalDateTime beginTime,
         LocalDateTime endTime,
-        Gender gender
+        Gender gender,
+        LocalDate dateOfBirth
 ) {
 }

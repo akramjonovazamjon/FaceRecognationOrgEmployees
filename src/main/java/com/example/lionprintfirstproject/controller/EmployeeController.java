@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -40,9 +41,11 @@ public class EmployeeController {
             @RequestParam(name = "jobId") Long jobId,
             @RequestParam(name = "beginTime")LocalDateTime beginTime,
             @RequestParam(name = "endTime")LocalDateTime endTime,
-            @RequestParam(name = "gender") Gender gender
+            @RequestParam(name = "gender") Gender gender,
+            @RequestParam(name = "scheduleId") Long scheduleId,
+            @RequestParam(name = "dateOfBirth")LocalDate dateOfBirth
             ) throws IOException {
-        Employee employee = service.create(new CreateEmployee(firstName, lastName, middleName, phoneNumber, address, beginTime, endTime, gender), file, departmentId, jobId);
+        Employee employee = service.create(new CreateEmployee(firstName, lastName, middleName, phoneNumber, address, beginTime, endTime, gender,dateOfBirth), file, departmentId, jobId, scheduleId);
         return ResponseData.of(mapper.asEmployee(employee));
     }
 
@@ -59,9 +62,11 @@ public class EmployeeController {
             @RequestParam(name = "jobId") Long jobId,
             @RequestParam(name = "beginTime")LocalDateTime beginTime,
             @RequestParam(name = "endTime")LocalDateTime endTime,
-            @RequestParam(name = "gender") Gender gender
+            @RequestParam(name = "gender") Gender gender,
+            @RequestParam(name = "scheduleId") Long scheduleId,
+            @RequestParam(name = "dateOfBirth")LocalDate dateOfBirth
     ) throws IOException {
-        service.update(new UpdateEmployee(firstName, lastName, middleName, phoneNumber, address,beginTime,endTime,gender), file, id, departmentId, jobId);
+        service.update(new UpdateEmployee(firstName, lastName, middleName, phoneNumber, address,beginTime,endTime,gender, dateOfBirth), file, id, departmentId, jobId,scheduleId);
     }
 
     @GetMapping

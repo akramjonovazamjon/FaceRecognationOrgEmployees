@@ -2,6 +2,7 @@ package com.example.lionprintfirstproject.dto.employee;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record UpdateEmployee(
@@ -12,6 +13,7 @@ public record UpdateEmployee(
         String address,
         LocalDateTime beginTime,
         LocalDateTime endTime,
-        Gender gender
+        Gender gender,
+        LocalDate dateOfBirth
 ) {
 }

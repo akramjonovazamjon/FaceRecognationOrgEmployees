@@ -1,7 +1,9 @@
 package com.example.lionprintfirstproject.controller.vm;
 
+import com.example.lionprintfirstproject.entity.Schedule;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record EmployeeVm(
@@ -19,6 +21,8 @@ public record EmployeeVm(
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
         LocalDateTime endTime,
         String gender,
-        EmployeeWorkingDayVm workingDay
+        EmployeeWorkingDayVm workingDay,
+        LocalDate dateOfBirth,
+        ScheduleVm schedule
 ) {
 }

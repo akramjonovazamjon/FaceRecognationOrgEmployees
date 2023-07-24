@@ -4,10 +4,7 @@ import com.example.lionprintfirstproject.controller.vm.EmployeeVm;
 import com.example.lionprintfirstproject.dto.employee.EmployeeCount;
 import com.example.lionprintfirstproject.dto.employee.CreateEmployee;
 import com.example.lionprintfirstproject.dto.employee.UpdateEmployee;
-import com.example.lionprintfirstproject.entity.Department;
-import com.example.lionprintfirstproject.entity.Employee;
-import com.example.lionprintfirstproject.entity.EmployeeWorkingDay;
-import com.example.lionprintfirstproject.entity.Job;
+import com.example.lionprintfirstproject.entity.*;
 import com.example.lionprintfirstproject.exception.employee.PictureNotFoundException;
 import com.example.lionprintfirstproject.exception.employee.EmployeeExistException;
 import com.example.lionprintfirstproject.exception.employee.EmployeeNotFoundByIdException;
@@ -37,14 +34,16 @@ public class EmployeeService {
     private final JobService jobService;
     private final EmployeeWorkingDayRepository employeeWorkingDayRepository;
     private final CameraEmployeeService cameraEmployeeService;
+    private final ScheduleService scheduleService;
     private final String HIK_VISION_ENTER = "http://192.168.0.191";
     private final String HIK_VISION_EXIT = "http://192.168.0.192";
 
-    public Employee create(CreateEmployee dto, MultipartFile file, Long departmentId, Long jobId) throws IOException {
+    public Employee create(CreateEmployee dto, MultipartFile file, Long departmentId, Long jobId, Long scheduleId) throws IOException {
 
         if (repository.existsByPhoneNumber(dto.phoneNumber())) {
             throw new EmployeeExistException();
         }
+        Schedule schedule = scheduleService.getById(scheduleId);
 
         Department department = departmentService.getById(departmentId);
 
@@ -52,7 +51,7 @@ public class EmployeeService {
 
         String imageUrl = saveUserPicture(file);
 
-        Employee employee = mapper.asNewEmployee(dto, imageUrl, department, job);
+        Employee employee = mapper.asNewEmployee(dto, imageUrl, department, job, schedule);
 
         Employee savedEmployee = repository.save(employee);
 
@@ -90,13 +89,14 @@ public class EmployeeService {
         return repository.findAll(pageable).getContent();
     }
 
-    public void update(UpdateEmployee dto, MultipartFile file, Long id, Long departmentId, Long jobId) throws IOException {
+    public void update(UpdateEmployee dto, MultipartFile file, Long id, Long departmentId, Long jobId, Long scheduleId) throws IOException {
 
         if (repository.existsByPhoneNumberAndIdNot(dto.phoneNumber(), id)) {
             throw new EmployeeExistException();
         }
 
         Department department = departmentService.getById(departmentId);
+        Schedule schedule = scheduleService.getById(scheduleId);
 
         Job job = jobService.getById(jobId);
 
@@ -104,7 +104,7 @@ public class EmployeeService {
 
         Employee employee = getById(id);
 
-        mapper.updateEmployee(dto, imageUrl, department, job, employee);
+        mapper.updateEmployee(dto, imageUrl, department, job, employee, schedule);
 
         Employee savedEmployee = repository.save(employee);
         boolean b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee,HIK_VISION_ENTER ,false);
