@@ -1,9 +1,7 @@
 package com.example.lionprintfirstproject.config.initializer;
 
-import com.example.lionprintfirstproject.dto.user.CreateUser;
 import com.example.lionprintfirstproject.entity.*;
 import com.example.lionprintfirstproject.repository.*;
-import com.example.lionprintfirstproject.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
