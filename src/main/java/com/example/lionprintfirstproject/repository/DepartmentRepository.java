@@ -10,7 +10,8 @@ import java.util.Optional;
 @Repository
 public interface DepartmentRepository extends JpaRepository<Department, Long>, JpaSpecificationExecutor<Department> {
 
-    boolean existsByName(String name);
+    boolean existsByNameAndBranchId(String name, Long branchId);
+
     Optional<Department> findByNameAndBranchId(String name, Long id);
 
     boolean existsByNameAndBranchIdAndIdNot(String name, Long branchId, Long id);

@@ -27,7 +27,7 @@ public class DepartmentService {
 
     public Department create(CreateDepartment dto) {
 
-        if (repository.existsByName(dto.name())) {
+        if (repository.existsByNameAndBranchId(dto.name(), dto.branchId())) {
             throw new DepartmentExistByNameException(dto.name());
         }
 
@@ -64,7 +64,6 @@ public class DepartmentService {
         Specification<Department> specification = buildDepartmentSpecification(filter);
         return repository.findAll(specification, pageable).getContent();
     }
-
 
 
     private Specification<Department> buildDepartmentSpecification(DepartmentFilter filter) {
