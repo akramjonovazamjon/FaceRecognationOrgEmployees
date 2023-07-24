@@ -22,6 +22,7 @@ public record EmployeeVm(
         LocalDateTime endTime,
         String gender,
         EmployeeWorkingDayVm workingDay,
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
         LocalDate dateOfBirth,
         ScheduleVm schedule
 ) {
