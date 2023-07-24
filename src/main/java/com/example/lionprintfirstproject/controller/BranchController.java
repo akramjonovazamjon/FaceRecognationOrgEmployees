@@ -32,7 +32,7 @@ public class BranchController {
         service.update(id, dto);
     }
 
-    @GetMapping("")
+    @GetMapping
     public ResponseData<List<BranchVm>> getAll(Pageable pageable) {
         List<Branch> branchList = service.getAll(pageable);
         return ResponseData.of(mapper.asBranchList(branchList));

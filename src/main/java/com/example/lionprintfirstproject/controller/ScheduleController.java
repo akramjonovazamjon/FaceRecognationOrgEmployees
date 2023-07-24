@@ -33,4 +33,8 @@ public class ScheduleController {
         List<ScheduleVm> scheduleVms= scheduleMapper.asScheduleVms(schedules);
         return ResponseData.of(scheduleVms);
     }
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id){
+        scheduleService.deleteById(id);
+    }
 }

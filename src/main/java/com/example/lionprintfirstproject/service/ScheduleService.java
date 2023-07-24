@@ -32,4 +32,8 @@ public class ScheduleService {
     public List<Schedule> getAll() {
         return repository.findAll();
     }
+
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
 }
