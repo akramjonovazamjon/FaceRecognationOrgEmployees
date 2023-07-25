@@ -1,6 +1,8 @@
 package com.example.lionprintfirstproject.config;
 
 import com.example.lionprintfirstproject.dto.ResponseData;
+import com.example.lionprintfirstproject.exception.branch.BranchExistException;
+import com.example.lionprintfirstproject.exception.branch.BranchNotFoundException;
 import com.example.lionprintfirstproject.exception.department.DepartmentExistByNameException;
 import com.example.lionprintfirstproject.exception.department.DepartmentNotFoundByIdException;
 import com.example.lionprintfirstproject.exception.employee.EmployeeExistException;
@@ -8,6 +10,10 @@ import com.example.lionprintfirstproject.exception.employee.EmployeeNotFoundById
 import com.example.lionprintfirstproject.exception.employee.PictureNotFoundException;
 import com.example.lionprintfirstproject.exception.job.JobExistException;
 import com.example.lionprintfirstproject.exception.job.JobNotFoundException;
+import com.example.lionprintfirstproject.exception.organization.OrganizationExistByNameException;
+import com.example.lionprintfirstproject.exception.organization.OrganizationNotFoundException;
+import com.example.lionprintfirstproject.exception.schedule.ScheduleExistException;
+import com.example.lionprintfirstproject.exception.schedule.ScheduleNoFoundException;
 import com.example.lionprintfirstproject.exception.user.UserExistByUsernameException;
 import com.example.lionprintfirstproject.exception.user.UserNotFoundByIdException;
 import com.example.lionprintfirstproject.exception.user.UserNotFoundByUsernameException;
@@ -83,6 +89,42 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(JobNotFoundException.class)
     public ResponseData<Object> handleJobNotFoundException(JobNotFoundException e) {
+        return ResponseData.errorOf(e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(OrganizationExistByNameException.class)
+    public ResponseData<Object> handleOrganizationExistByNameException(OrganizationExistByNameException e) {
+        return ResponseData.errorOf(e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(OrganizationNotFoundException.class)
+    public ResponseData<Object> handleOrganizationNotFoundException(OrganizationNotFoundException e) {
+        return ResponseData.errorOf(e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(BranchExistException.class)
+    public ResponseData<Object> handleBranchExistException(BranchExistException e) {
+        return ResponseData.errorOf(e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(BranchNotFoundException.class)
+    public ResponseData<Object> handleBranchNotFoundException(BranchNotFoundException e) {
+        return ResponseData.errorOf(e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(ScheduleExistException.class)
+    public ResponseData<Object> handleScheduleExistException(ScheduleExistException e) {
+        return ResponseData.errorOf(e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(ScheduleNoFoundException.class)
+    public ResponseData<Object> handleScheduleNoFoundException(ScheduleNoFoundException e) {
         return ResponseData.errorOf(e.getMessage());
     }
 
