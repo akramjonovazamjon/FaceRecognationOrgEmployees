@@ -3,6 +3,8 @@ package com.example.lionprintfirstproject.entity;
 import com.example.lionprintfirstproject.dto.department.UpdateDepartment;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,6 +20,7 @@ public class Department {
     @Column(nullable = false)
     private String name;
     private String info;
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne
     private Branch branch;
 
