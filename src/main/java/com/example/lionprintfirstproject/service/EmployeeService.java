@@ -53,15 +53,17 @@ public class EmployeeService {
 
         Employee employee = mapper.asNewEmployee(dto, imageUrl, department, job, schedule);
 
-        Employee savedEmployee = repository.save(employee);
-
-        boolean b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee,HIK_VISION_ENTER ,true);
-        employee.setAddedToEnter(b);
-        b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee,HIK_VISION_EXIT,true);
-
-        employee.setAddedToExit(b);
-
         return repository.save(employee);
+
+//        Employee savedEmployee = repository.save(employee);
+//
+//        boolean b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee,HIK_VISION_ENTER ,true);
+//        employee.setAddedToEnter(b);
+//        b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee,HIK_VISION_EXIT,true);
+//
+//        employee.setAddedToExit(b);
+//
+//        return repository.save(employee);
     }
 
     private static final String BASE_IMAGE_PATH = "src/main/resources/";
@@ -78,7 +80,7 @@ public class EmployeeService {
             byte[] mainContent = picture.getBytes();
             outputStream.write(mainContent);
         }
-        return "http://192.168.0.133:8008/" + imageUrl;
+        return imageUrl;
     }
 
     public Employee getById(Long id) {
@@ -107,9 +109,9 @@ public class EmployeeService {
         mapper.updateEmployee(dto, imageUrl, department, job, employee, schedule);
 
         Employee savedEmployee = repository.save(employee);
-        boolean b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee,HIK_VISION_ENTER ,false);
+        boolean b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee, HIK_VISION_ENTER, false);
         employee.setAddedToEnter(b);
-        b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee,HIK_VISION_EXIT,false);
+        b = cameraEmployeeService.saveEmployeeToCamera(savedEmployee, HIK_VISION_EXIT, false);
         employee.setAddedToExit(b);
         repository.save(employee);
     }
