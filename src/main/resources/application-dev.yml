@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://${POSTGRES_HOST:ec2-18-203-205-71.eu-west-1.compute.amazonaws.com}:${POSTGRES_PORT:5432}/${POSTGRES_DB:d7m986j6673psa}
-    username: ${POSTGRES_USER:sthpocajxjturj}
-    password: ${POSTGRES_PASSWORD:d4e8ca764a5eb837e777c6315dac656dbb16d34c8c079e57e4533d9f28013c3b}
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:lion_print_db}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:azamjon1999}
     driverClassName: org.postgresql.Driver
 
   jpa:
