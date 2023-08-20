@@ -70,19 +70,6 @@ public class SecurityConfig {
         };
     }
 
-//    @Bean
-//    public WebMvcConfigurer webMvcConfigurer1() {
-//        return new WebMvcConfigurer() {
-//            @Override
-//            public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//                registry
-//                        .addResourceHandler("/images/**")
-//                        .addResourceLocations("classpath:/images/")
-//                        .setCacheControl(CacheControl.noCache());
-//            }
-//        };
-//    }
-
     @Bean
     public RestTemplateBuilder restTemplateBuilder() {
         return new RestTemplateBuilder();
@@ -100,9 +87,7 @@ public class SecurityConfig {
                 .setDefaultCredentialsProvider(credentialsProvider).build();
 
         return builder
-                .requestFactory(() -> {
-                    return new HttpComponentsClientHttpRequestFactory(httpClient);
-                })
+                .requestFactory(() -> new HttpComponentsClientHttpRequestFactory(httpClient))
                 .build();
     }
 }
