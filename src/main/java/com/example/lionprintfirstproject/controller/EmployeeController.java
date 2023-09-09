@@ -39,13 +39,13 @@ public class EmployeeController {
             @RequestParam(name = "file") MultipartFile file,
             @RequestParam(name = "departmentId") Long departmentId,
             @RequestParam(name = "jobId") Long jobId,
-            @RequestParam(name = "beginTime")LocalDateTime beginTime,
-            @RequestParam(name = "endTime")LocalDateTime endTime,
+            @RequestParam(name = "beginTime") LocalDateTime beginTime,
+            @RequestParam(name = "endTime") LocalDateTime endTime,
             @RequestParam(name = "gender") Gender gender,
             @RequestParam(name = "scheduleId") Long scheduleId,
-            @RequestParam(name = "dateOfBirth")LocalDate dateOfBirth
-            ) throws IOException {
-        Employee employee = service.create(new CreateEmployee(firstName, lastName, middleName, phoneNumber, address, beginTime, endTime, gender,dateOfBirth), file, departmentId, jobId, scheduleId);
+            @RequestParam(name = "dateOfBirth") LocalDate dateOfBirth
+    ) throws IOException {
+        Employee employee = service.create(new CreateEmployee(firstName, lastName, middleName, phoneNumber, address, beginTime, endTime, gender, dateOfBirth), file, departmentId, jobId, scheduleId);
         return ResponseData.of(mapper.asEmployee(employee));
     }
 
@@ -60,13 +60,13 @@ public class EmployeeController {
             @RequestParam(name = "file") MultipartFile file,
             @RequestParam(name = "departmentId") Long departmentId,
             @RequestParam(name = "jobId") Long jobId,
-            @RequestParam(name = "beginTime")LocalDateTime beginTime,
-            @RequestParam(name = "endTime")LocalDateTime endTime,
+            @RequestParam(name = "beginTime") LocalDateTime beginTime,
+            @RequestParam(name = "endTime") LocalDateTime endTime,
             @RequestParam(name = "gender") Gender gender,
             @RequestParam(name = "scheduleId") Long scheduleId,
-            @RequestParam(name = "dateOfBirth")LocalDate dateOfBirth
+            @RequestParam(name = "dateOfBirth") LocalDate dateOfBirth
     ) throws IOException {
-        service.update(new UpdateEmployee(firstName, lastName, middleName, phoneNumber, address,beginTime,endTime,gender, dateOfBirth), file, id, departmentId, jobId,scheduleId);
+        service.update(new UpdateEmployee(firstName, lastName, middleName, phoneNumber, address, beginTime, endTime, gender, dateOfBirth), file, id, departmentId, jobId, scheduleId);
     }
 
     @GetMapping

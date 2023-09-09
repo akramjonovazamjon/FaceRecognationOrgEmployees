@@ -161,5 +161,4 @@ public class EmployeeService {
             return mapper.asEmployeeVm(employee, arrivalTime.get(0));
         }
     }
-
 }

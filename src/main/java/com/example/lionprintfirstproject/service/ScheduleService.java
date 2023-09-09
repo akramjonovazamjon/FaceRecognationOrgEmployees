@@ -25,7 +25,7 @@ public class ScheduleService {
         return repository.save(schedule);
     }
 
-    public Schedule getById(Long id){
+    public Schedule getById(Long id) {
         return repository.findById(id).orElseThrow(ScheduleNoFoundException::new);
     }
 

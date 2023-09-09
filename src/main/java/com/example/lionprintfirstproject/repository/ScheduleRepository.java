@@ -10,5 +10,6 @@ import java.util.Optional;
 @Repository
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     boolean existsByStartTimeAndEndTime(LocalTime start, LocalTime end);
+
     Optional<Schedule> findByStartTimeAndEndTime(LocalTime start, LocalTime end);
 }

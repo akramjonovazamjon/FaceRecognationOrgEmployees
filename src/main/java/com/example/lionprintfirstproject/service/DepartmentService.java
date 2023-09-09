@@ -74,6 +74,4 @@ public class DepartmentService {
 
         return spec;
     }
-
-
 }
